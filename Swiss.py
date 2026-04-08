@@ -25,8 +25,8 @@ OPTIONS = [
 def utc_millis_for_hour(hour):
     utc = pytz.utc
     now = datetime.now(utc)
-    tomorrow = now + timedelta(days=1)
-    start = datetime(tomorrow.year, tomorrow.month, tomorrow.day, hour, 45, tzinfo=utc)
+    tomorrow = now + timedelta(days=0)
+    start = datetime(tomorrow.year, tomorrow.month, tomorrow.day, hour, 0, tzinfo=utc)
     return int(start.timestamp() * 1000), start
 
 def read_description():
@@ -37,7 +37,7 @@ def read_description():
     return "Welcome to our Swiss tournament!"
 
 def create_swiss():
-    for hour in range(24):
+    for hour in range(0, 24, 4):
         option = random.choice(OPTIONS)
         startDate, start_dt = utc_millis_for_hour(hour)
         payload = {
