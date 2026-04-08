@@ -27,10 +27,12 @@ def utc_millis_for_hour(hour):
     now = datetime.now(local_tz)
     tomorrow = now + timedelta(days=1)
 
-    start_local = datetime(
+    naive = datetime(
         tomorrow.year, tomorrow.month, tomorrow.day,
-        hour, 0, tzinfo=local_tz
+        hour, 0
     )
+
+    start_local = local_tz.localize(naive)  # 🔥 DAS ist der Fix
 
     start_utc = start_local.astimezone(pytz.utc)
     return int(start_utc.timestamp() * 1000), start_local
