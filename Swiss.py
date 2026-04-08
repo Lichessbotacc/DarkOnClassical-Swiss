@@ -25,7 +25,7 @@ OPTIONS = [
 def utc_millis_for_hour(hour):
     local_tz = pytz.timezone("Europe/Berlin")
     now = datetime.now(local_tz)
-    tomorrow = now + timedelta(days=1)
+    tomorrow = now + timedelta(days=2)
 
     naive = datetime(
         tomorrow.year, tomorrow.month, tomorrow.day,
