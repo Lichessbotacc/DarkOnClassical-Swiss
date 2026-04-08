@@ -23,11 +23,17 @@ OPTIONS = [
 ]
 
 def utc_millis_for_hour(hour):
-    utc = pytz.utc
-    now = datetime.now(utc)
-    tomorrow = now + timedelta(days=0)
-    start = datetime(tomorrow.year, tomorrow.month, tomorrow.day, hour, 0, tzinfo=utc)
-    return int(start.timestamp() * 1000), start
+    local_tz = pytz.timezone("Europe/Berlin")
+    now = datetime.now(local_tz)
+    tomorrow = now + timedelta(days=1)
+
+    start_local = datetime(
+        tomorrow.year, tomorrow.month, tomorrow.day,
+        hour, 0, tzinfo=local_tz
+    )
+
+    start_utc = start_local.astimezone(pytz.utc)
+    return int(start_utc.timestamp() * 1000), start_local
 
 def read_description():
     path = os.path.join(os.path.dirname(__file__), "description.txt")
